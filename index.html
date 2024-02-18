@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz</title>
+    <style>
+      body,
+      html {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevents horizontal scrolling */
+      }
+
+      #app-container {
+        width: 400px;
+        height: 400px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+      }
+
+      #settingsIcon-container {
+        width: 400px;
+        height: 50px;
+        text-align: center;
+      }
+
+      #question-container {
+        width: 400px;
+        height: 50px;
+        text-align: center;
+        position: relative;
+      }
+
+      #input-container {
+        width: 400px;
+        height: 60px;
+        text-align: center;
+        position: relative;
+      }
+
+      #submission-container {
+        width: 400px;
+        height: 60px;
+        text-align: center;
+        position: relative;
+      }
+
+      #buttons-container {
+        width: 100%;
+        text-align: center;
+        position: relative;
+      }
+
+      #question {
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        font-size: 20px;
+        font-weight: bold;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      #answer {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      #showResults {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      #submit {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      #restart {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      #quiz-container {
+        width: 400px;
+        height: 200px;
+        text-align: center;
+        top: 50%;
+        transform: translate(0, -50%);
+        position: absolute;
+      }
+
+      input[type="number"] {
+        width: 90%;
+        padding: 8px;
+        margin: 10px 0;
+      }
+
+      button {
+        width: 60%;
+        padding: 8px;
+        margin-top: 10px 0;
+        cursor: pointer;
+      }
+
+      #tl-label {
+        text-align: center;
+        top: 10px;
+        left: 0;
+        padding: 10px;
+        position: absolute;
+      }
+
+      #timer {
+        text-align: center;
+        top: 10px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        padding: 10px;
+        position: absolute;
+      }
+
+      #settingsIcon {
+        position: absolute; /* Position the settings icon absolutely within the container */
+        top: 0; /* Align to the top edge of the container */
+        right: 0; /* Align to the right edge of the container */
+        cursor: pointer;
+        padding: 10px; /* Add some space around the icon */
+        font-size: 30px;
+      }
+
+      #saveSettings {
+        width: 60px;
+      }
+
+      #cancelSettings {
+        width: 60px;
+      }
+
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 5;
+      }
+
+      #settingsPanel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 250px;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: white;
+        z-index: 10;
+      }
+
+      #resultsPanel {
+        position: absolute;
+        overflow: auto;
+        top: 50%;
+        left: 50%;
+        width: 500px;
+        height: 80vh;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background: white;
+        z-index: 10;
+      }
+      #close-btn-placeholder {
+        width: 100%;
+        height: 20px;
+      }
+
+      .setting {
+        margin-bottom: 14px;
+      }
+      .label {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .correct {
+        color: green;
+      }
+      .incorrect {
+        color: red;
+      }
+      .close-btn {
+        position: absolute;
+        top: 1px; /* Adjust position */
+        right: 1px;
+        width: 15px; /* Size of the close button */
+        height: 15px;
+        background-color: white; /* Background color of the close button */
+        cursor: pointer;
+        user-select: none; /* Prevent text selection */
+        border: 1px solid #ccc;
+      }
+      .close-btn::before,
+      .close-btn::after {
+        content: "";
+        position: absolute;
+        width: 1px; /* Line width */
+        height: 100%;
+        background-color: black; /* Line color */
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0%) rotate(45deg);
+      }
+      .close-btn::after {
+        transform: translate(-50%, 0%) rotate(-45deg);
+      }
+      .center {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="settingsPanel" style="display: none">
+      <div class="setting">
+        <label for="difficulty" class="label">Difficulty:</label>
+        <select id="difficulty" name="difficulty">
+          <option value="1">Level 1</option>
+          <option value="2">Level 2</option>
+          <option value="3" selected>Level 3</option>
+          <option value="4">Level 4</option>
+          <option value="5">Level 5</option>
+          <option value="6">Level 6</option>
+          <option value="7">Level 7</option>
+        </select>
+      </div>
+      <div class="setting">
+        <label for="problems" class="label">Problems:</label>
+        <select id="problems" name="problems">
+          <option value="10">10 Problems</option>
+          <option value="20" selected>20 Problems</option>
+          <option value="30">30 Problems</option>
+        </select>
+      </div>
+      <div class="setting">
+        <input type="checkbox" id="errorOnly" name="errorOnly" checked />
+        <label for="errorOnly" class="label">
+          Only show incorrect answers
+        </label>
+      </div>
+      <div id="buttons-container">
+        <button id="saveSettings">Save</button>
+        <button id="cancelSettings">Cancel</button>
+      </div>
+    </div>
+    <div id="overlay" style="display: none"></div>
+    <div id="resultsPanel" style="display: none">
+      <div id="close-btn-placeholder">
+        <div class="close-btn" id="closeResults"></div>
+      </div>
+      <div id="resultsTable"></div>
+    </div>
+    <div id="app-container">
+      <div id="settingsIcon-container">
+        <div id="tl-label" style="display: none">Level:</div>
+        <div id="timer" style="display: none">00:00:00</div>
+        <div id="settingsIcon">⚙</div>
+      </div>
+      <div id="quiz-container">
+        <div id="question-container">
+          <div id="question">Math quiz test</div>
+        </div>
+        <div id="input-container">
+          <input
+            type="number"
+            id="answer"
+            placeholder="Your answer"
+            style="display: none"
+          />
+          <button id="showResults" style="display: none">Show Results</button>
+        </div>
+        <div id="submission-container">
+          <button id="submit" style="display: none">Submit</button>
+          <button id="restart">Start Over</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const questionElement = document.getElementById("question");
+        const answerElement = document.getElementById("answer");
+        const submitBtn = document.getElementById("submit");
+        const restartBtn = document.getElementById("restart");
+        const settingsIcon = document.getElementById("settingsIcon");
+        const overlay = document.getElementById("overlay");
+        const settingsPanel = document.getElementById("settingsPanel");
+        const resultsPanel = document.getElementById("resultsPanel");
+        const saveSettingsBtn = document.getElementById("saveSettings");
+        const cancelSettingsBtn = document.getElementById("cancelSettings");
+        const timer = document.getElementById("timer");
+        const tlLabel = document.getElementById("tl-label");
+        const showResultsBtn = document.getElementById("showResults");
+        const closeResultsBtn = document.getElementById("closeResults");
+        const resultsTable = document.getElementById("resultsTable");
+
+        let level = parseInt(document.getElementById("difficulty").value);
+        let totalQuestions = parseInt(
+          document.getElementById("problems").value
+        );
+        let errorOnly = document.getElementById("errorOnly").checked;
+        let currentLevel, currentTotal;
+        let renderResultsTable = true;
+
+        let questions = [];
+        let currentQuestion = {};
+        let score = 0;
+        let questionNumber = 0;
+
+        function generateQuestion1() {
+          const num1 = Math.floor(Math.random() * 11);
+          const num2 = Math.floor(Math.random() * 11);
+          const sum = num1 + num2;
+          if (Math.random() < 0.5) {
+            currentQuestion.text = `${num1} + ${num2} = ?`;
+            currentQuestion.answer = sum;
+          } else {
+            currentQuestion.text = `${sum} - ${num1} = ?`;
+            currentQuestion.answer = num2;
+          }
+        }
+
+        function generateQuestion2() {
+          const num1 = Math.floor(Math.random() * 15) + 5;
+          const num2 = Math.floor(Math.random() * 15) + 5;
+          const sum = num1 + num2;
+          if (Math.random() < 0.5) {
+            currentQuestion.text = `${num1} + ${num2} = ?`;
+            currentQuestion.answer = sum;
+          } else {
+            currentQuestion.text = `${sum} - ${num1} = ?`;
+            currentQuestion.answer = num2;
+          }
+        }
+
+        function generateQuestion3() {
+          const num1 = Math.floor(Math.random() * 30) + 10;
+          const num2 = Math.floor(Math.random() * 30) + 10;
+          const sum = num1 + num2;
+          if (Math.random() < 0.5) {
+            switch (Math.floor(Math.random() * 3)) {
+              case 0:
+                currentQuestion.text = `${num1} + ${num2} = ?`;
+                currentQuestion.answer = sum;
+                break;
+              case 1:
+                currentQuestion.text = `? + ${num2} = ${sum}`;
+                currentQuestion.answer = num1;
+                break;
+              default:
+                currentQuestion.text = `${num1} + ? = ${sum}`;
+                currentQuestion.answer = num2;
+            }
+          } else {
+            switch (Math.floor(Math.random() * 3)) {
+              case 0:
+                currentQuestion.text = `${sum} - ${num1} = ?`;
+                currentQuestion.answer = num2;
+                break;
+              case 1:
+                currentQuestion.text = `? - ${num1} = ${num2}`;
+                currentQuestion.answer = sum;
+                break;
+              default:
+                currentQuestion.text = `${sum} - ? = ${num2}`;
+                currentQuestion.answer = num1;
+            }
+          }
+        }
+
+        function generateQuestion4() {
+          const num1 = Math.floor(Math.random() * 90) + 10;
+          const num2 = Math.floor(Math.random() * 90) + 10;
+          const sum = num1 + num2;
+          if (Math.random() < 0.5) {
+            switch (Math.floor(Math.random() * 3)) {
+              case 0:
+                currentQuestion.text = `${num1} + ${num2} = ?`;
+                currentQuestion.answer = sum;
+                break;
+              case 1:
+                currentQuestion.text = `? + ${num2} = ${sum}`;
+                currentQuestion.answer = num1;
+                break;
+              default:
+                currentQuestion.text = `${num1} + ? = ${sum}`;
+                currentQuestion.answer = num2;
+            }
+          } else {
+            switch (Math.floor(Math.random() * 3)) {
+              case 0:
+                currentQuestion.text = `${sum} - ${num1} = ?`;
+                currentQuestion.answer = num2;
+                break;
+              case 1:
+                currentQuestion.text = `? - ${num1} = ${num2}`;
+                currentQuestion.answer = sum;
+                break;
+              default:
+                currentQuestion.text = `${sum} - ? = ${num2}`;
+                currentQuestion.answer = num1;
+            }
+          }
+        }
+
+        function generateQuestion5() {
+          const num1 = Math.floor(Math.random() * 10) + 1;
+          const num2 = Math.floor(Math.random() * 10) + 1;
+          const product = num1 * num2;
+          currentQuestion.text = `${num1} * ${num2} = ?`;
+          currentQuestion.answer = product;
+        }
+
+        function generateQuestion6() {
+          const num1 = Math.floor(Math.random() * 10) + 3;
+          const num2 = Math.floor(Math.random() * 10) + 3;
+          const product = num1 * num2;
+          switch (Math.floor(Math.random() * 3)) {
+            case 0:
+              currentQuestion.text = `${num1} * ${num2} = ?`;
+              currentQuestion.answer = product;
+              break;
+            case 1:
+              currentQuestion.text = `? * ${num2} = ${product}`;
+              currentQuestion.answer = num1;
+              break;
+            default:
+              currentQuestion.text = `${num1} * ? = ${product}`;
+              currentQuestion.answer = num2;
+          }
+        }
+
+        function generateQuestion7() {
+          const num1 = Math.floor(Math.random() * 16) + 5;
+          const num2 = Math.floor(Math.random() * 16) + 5;
+          const product = num1 * num2;
+          switch (Math.floor(Math.random() * 3)) {
+            case 0:
+              currentQuestion.text = `${num1} * ${num2} = ?`;
+              currentQuestion.answer = product;
+              break;
+            case 1:
+              currentQuestion.text = `? * ${num2} = ${product}`;
+              currentQuestion.answer = num1;
+              break;
+            default:
+              currentQuestion.text = `${num1} * ? = ${product}`;
+              currentQuestion.answer = num2;
+          }
+        }
+
+        function generateQuestion() {
+          switch (currentLevel) {
+            case 1:
+              generateQuestion1();
+              break;
+            case 2:
+              generateQuestion2();
+              break;
+            case 3:
+              generateQuestion3();
+              break;
+            case 4:
+              generateQuestion4();
+              break;
+            case 5:
+              generateQuestion5();
+              break;
+            case 6:
+              generateQuestion6();
+              break;
+            default:
+              generateQuestion7();
+          }
+
+          questionElement.textContent = `Q${questionNumber + 1}: ${
+            currentQuestion.text
+          }`;
+          answerElement.value = "";
+          submitBtn.style.display = "inline-block";
+          answerElement.style.display = "inline-block";
+        }
+
+        submitBtn.addEventListener("click", () => {
+          const userAnswer = parseInt(answerElement.value, 10);
+          if (isNaN(userAnswer)) return;
+          currentQuestion.userAnswer = userAnswer;
+          if (userAnswer === currentQuestion.answer) {
+            currentQuestion.correct = true;
+            score++;
+          } else {
+            currentQuestion.correct = false;
+          }
+          let cloneQuestion = Object.assign({}, currentQuestion);
+          questions.push(cloneQuestion);
+          questionNumber++;
+          if (questionNumber < currentTotal) {
+            generateQuestion();
+          } else {
+            stopTimer();
+            questionElement.innerHTML = `Quiz finished!<br>Your score: ${score}/${currentTotal}`;
+            submitBtn.style.display = "none";
+            answerElement.style.display = "none";
+            restartBtn.style.display = "inline-block";
+            showResultsBtn.style.display = "inline-block";
+          }
+        });
+
+        restartBtn.addEventListener("click", () => {
+          questions = [];
+          currentQuestion = {};
+          score = 0;
+          questionNumber = 0;
+          restartBtn.style.display = "none";
+          showResultsBtn.style.display = "none";
+          currentLevel = level;
+          currentTotal = totalQuestions;
+          resetTimer();
+          timer.style.display = "inline-block";
+          tlLabel.textContent = `Level: ${level}`;
+          tlLabel.style.display = "inline-block";
+          resultsTable.textContent = "";
+          renderResultsTable = true;
+          generateQuestion();
+          answerElement.focus();
+          startTimer();
+        });
+
+        settingsIcon.addEventListener("click", function () {
+          if (overlay.style.display === "none") {
+            overlay.style.display = "block";
+            settingsPanel.style.display = "block";
+          } else {
+            overlay.style.display = "none";
+            settingsPanel.style.display = "none";
+          }
+        });
+
+        saveSettingsBtn.addEventListener("click", () => {
+          level = parseInt(document.getElementById("difficulty").value);
+          totalQuestions = parseInt(document.getElementById("problems").value);
+          let newErrorOnly = document.getElementById("errorOnly").checked;
+          if (errorOnly != newErrorOnly) {
+            errorOnly = newErrorOnly;
+            resultsTable.textContent = "";
+            renderResultsTable = true;
+          }
+          overlay.style.display = "none";
+          settingsPanel.style.display = "none";
+        });
+
+        cancelSettingsBtn.addEventListener("click", () => {
+          document.getElementById("difficulty").selectedIndex = level - 1;
+          document.getElementById("problems").selectedIndex =
+            totalQuestions / 10 - 1;
+          document.getElementById("errorOnly").checked = errorOnly;
+          overlay.style.display = "none";
+          settingsPanel.style.display = "none";
+        });
+
+        answerElement.addEventListener("keyup", (event) => {
+          if (event.key === "Enter") {
+            submitBtn.click();
+          }
+        });
+
+        closeResultsBtn.addEventListener("click", () => {
+          overlay.style.display = "none";
+          resultsPanel.style.display = "none";
+        });
+
+        let startTime,
+          updatedTime,
+          difference,
+          tInterval,
+          running = 0;
+
+        function startTimer() {
+          if (!running) {
+            startTime = new Date().getTime();
+            tInterval = setInterval(getShowTime, 1);
+            running = 1;
+          }
+        }
+
+        function stopTimer() {
+          if (running) {
+            clearInterval(tInterval);
+            running = 0;
+          }
+        }
+
+        function resetTimer() {
+          clearInterval(tInterval);
+          running = 0;
+          timer.innerHTML = "00:00:00";
+        }
+
+        function getShowTime() {
+          updatedTime = new Date().getTime();
+          difference = updatedTime - startTime;
+
+          let hours = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          let minutes = Math.floor(
+            (difference % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+          let milliseconds = Math.floor((difference % (1000 * 60)) / 100) % 10;
+
+          hours = hours < 10 ? "0" + hours : hours;
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+          timer.innerHTML =
+            hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+        }
+
+        showResultsBtn.addEventListener("click", function () {
+          if (overlay.style.display === "none") {
+            renderResults();
+            overlay.style.display = "block";
+            resultsPanel.style.display = "block";
+          }
+        });
+
+        function renderResults() {
+          if (!renderResultsTable) {
+            return;
+          }
+          if (errorOnly && score == currentTotal) {
+            resultsTable.innerHTML = `<div width="100%"  class="center">All correct!</div>`;
+            renderResultsTable = false;
+            return;
+          }
+
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const tbody = document.createElement("tbody");
+
+          // Create the header row
+          const headerRow = document.createElement("tr");
+          const headers = ["No.", "Question", "Correct Answer", "Your Answer"];
+          headers.forEach((headerText) => {
+            const header = document.createElement("th");
+            header.textContent = headerText;
+            headerRow.appendChild(header);
+          });
+          thead.appendChild(headerRow);
+
+          // Create the body rows
+          let seq = 1;
+          questions.forEach((question) => {
+            if (!errorOnly || !question.correct) {
+              const row = document.createElement("tr");
+              const cellSeq = document.createElement("td");
+              cellSeq.textContent = seq;
+              row.appendChild(cellSeq);
+              const cellQuestion = document.createElement("td");
+              cellQuestion.textContent = question.text;
+              row.appendChild(cellQuestion);
+              const cellCorrect = document.createElement("td");
+              cellCorrect.textContent = question.answer;
+              cellCorrect.className = question.correct
+                ? "correct"
+                : "incorrect";
+              row.appendChild(cellCorrect);
+              const cellYours = document.createElement("td");
+              cellYours.textContent = question.userAnswer;
+              cellYours.className = question.correct ? "correct" : "incorrect";
+              row.appendChild(cellYours);
+              tbody.appendChild(row);
+            }
+            seq++;
+          });
+
+          table.appendChild(thead);
+          table.appendChild(tbody);
+          resultsTable.appendChild(table);
+          renderResultsTable = false;
+        }
+      });
+    </script>
+  </body>
+</html>
