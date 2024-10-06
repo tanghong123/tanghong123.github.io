@@ -263,18 +263,20 @@
         <select id="difficulty" name="difficulty">
           <option value="1">Level 1</option>
           <option value="2">Level 2</option>
-          <option value="3" selected>Level 3</option>
+          <option value="3">Level 3</option>
           <option value="4">Level 4</option>
           <option value="5">Level 5</option>
           <option value="6">Level 6</option>
           <option value="7">Level 7</option>
+          <option value="8" selected>Level 8</option>
         </select>
       </div>
       <div class="setting">
         <label for="problems" class="label">Problems:</label>
         <select id="problems" name="problems">
           <option value="10">10 Problems</option>
-          <option value="20" selected>20 Problems</option>
+          <option value="20">20 Problems</option>
+          <option value="27" selected>27 Problems</option>
           <option value="30">30 Problems</option>
         </select>
       </div>
@@ -494,6 +496,16 @@
           }
         }
 
+        function generateQuestion8() {
+          const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const num2_max = Math.floor(144 / num1);
+          const num2 =
+            Math.floor(Math.sqrt(Math.random()) * (num2_max - 1)) + 2;
+          const product = num1 * num2;
+          currentQuestion.text = `${product} / ${num1}`;
+          currentQuestion.answer = num2;
+        }
+
         function generateQuestion() {
           switch (currentLevel) {
             case 1:
@@ -514,8 +526,10 @@
             case 6:
               generateQuestion6();
               break;
-            default:
+            case 7:
               generateQuestion7();
+            default:
+              generateQuestion8();
           }
 
           questionElement.textContent = `Q${questionNumber + 1}: ${
