@@ -272,12 +272,12 @@
         </select>
       </div>
       <div class="setting">
-        <label for="problems" class="label">Problems:</label>
+        <label for="problems" class="label"># of Problems:</label>
         <select id="problems" name="problems">
           <option value="10">10 Problems</option>
           <option value="20">20 Problems</option>
-          <option value="27" selected>27 Problems</option>
           <option value="30">30 Problems</option>
+          <option value="10090" selected>90 Seconds</option>
         </select>
       </div>
       <div class="setting">
@@ -345,6 +345,11 @@
         let totalQuestions = parseInt(
           document.getElementById("problems").value
         );
+        let timeOut = -1;
+        if (totalQuestions > 10000) {
+          timeOut = totalQuestions % 10000;
+        }
+
         let errorOnly = document.getElementById("errorOnly").checked;
         let currentLevel, currentTotal;
         let renderResultsTable = true;
@@ -559,13 +564,7 @@
           if (questionNumber < currentTotal) {
             generateQuestion();
           } else {
-            stopTimer();
-            questionElement.innerHTML = `Quiz finished!<br>Your score: ${score}/${currentTotal}`;
-            submitBtn.style.display = "none";
-            answerElement.style.display = "none";
-            restartBtn.textContent = "Try Again";
-            restartBtn.style.display = "inline-block";
-            showResultsBtn.style.display = "inline-block";
+            finishQuiz();
           }
         });
 
@@ -638,9 +637,22 @@
           tInterval,
           running = 0;
 
+        function finishQuiz() {
+          stopTimer();
+          questionElement.innerHTML = `Quiz finished!<br>Your score: ${score}/${questionNumber}`;
+          submitBtn.style.display = "none";
+          answerElement.style.display = "none";
+          restartBtn.textContent = "Try Again";
+          restartBtn.style.display = "inline-block";
+          showResultsBtn.style.display = "inline-block";
+        }
+
         function startTimer() {
           if (!running) {
             startTime = new Date().getTime();
+            if (timeOut > 0) {
+              setTimeout(finishQuiz, timeOut * 1000);
+            }
             tInterval = setInterval(getShowTime, 1);
             running = 1;
           }
