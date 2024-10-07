@@ -261,14 +261,17 @@
       <div class="setting">
         <label for="difficulty" class="label">Difficulty:</label>
         <select id="difficulty" name="difficulty">
-          <option value="1">Level 1</option>
-          <option value="2">Level 2</option>
-          <option value="3">Level 3</option>
-          <option value="4">Level 4</option>
-          <option value="5">Level 5</option>
-          <option value="6">Level 6</option>
-          <option value="7">Level 7</option>
-          <option value="8" selected>Level 8</option>
+          <option value="1">Level 1 (plus and minus, &le;10)</option>
+          <option value="2">Level 2 (plus and minus, &lt;20)</option>
+          <option value="3">Level 3 (plus and minus, mixed, &lt;40)</option>
+          <option value="4">Level 4 (plus and minus, mixed, &lt;100)</option>
+          <option value="5">Level 5 (multiple, &le;10)</option>
+          <option value="6">Level 6 (multiple, &le;12)</option>
+          <option value="7">Level 7 (multiple, mixed, &le;12)</option>
+          <option value="8">Level 8 (multiple, mixed, &le;20)</option>
+          <option value="9" selected>Level 9 (division, &le;12)</option>
+          <option value="10">Level 10, mixed, (division, &le;12)</option>
+          <option value="11">Level 11, mixed, (division, &le;20)</option>
         </select>
       </div>
       <div class="setting">
@@ -464,8 +467,16 @@
         }
 
         function generateQuestion6() {
-          const num1 = Math.floor(Math.random() * 10) + 3;
-          const num2 = Math.floor(Math.random() * 10) + 3;
+          const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const num2 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const product = num1 * num2;
+          currentQuestion.text = `${num1} * ${num2} = ?`;
+          currentQuestion.answer = product;
+        }
+
+        function generateQuestion7() {
+          const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const num2 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
           const product = num1 * num2;
           switch (Math.floor(Math.random() * 3)) {
             case 0:
@@ -482,7 +493,7 @@
           }
         }
 
-        function generateQuestion7() {
+        function generateQuestion8() {
           const num1 = Math.floor(Math.random() * 16) + 5;
           const num2 = Math.floor(Math.random() * 16) + 5;
           const product = num1 * num2;
@@ -501,7 +512,7 @@
           }
         }
 
-        function generateQuestion8() {
+        function generateQuestion9() {
           const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
           const num2 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
           /**
@@ -512,6 +523,44 @@
           const product = num1 * num2;
           currentQuestion.text = `${product} / ${num1}`;
           currentQuestion.answer = num2;
+        }
+
+        function generateQuestion10() {
+          const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const num2 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const product = num1 * num2;
+          switch (Math.floor(Math.random() * 3)) {
+            case 0:
+              currentQuestion.text = `? / ${num1} = ${num2}`;
+              currentQuestion.answer = product;
+              break;
+            case 1:
+              currentQuestion.text = `${product} / ? = ${num2}`;
+              currentQuestion.answer = num1;
+              break;
+            default:
+              currentQuestion.text = `${product} / ${num1} = ?`;
+              currentQuestion.answer = num2;
+          }
+        }
+
+        function generateQuestion11() {
+          const num1 = Math.floor(Math.random() * 16) + 5;
+          const num2 = Math.floor(Math.random() * 16) + 5;
+          const product = num1 * num2;
+          switch (Math.floor(Math.random() * 3)) {
+            case 0:
+              currentQuestion.text = `? / ${num1} = ${num2}`;
+              currentQuestion.answer = product;
+              break;
+            case 1:
+              currentQuestion.text = `${product} / ? = ${num2}`;
+              currentQuestion.answer = num1;
+              break;
+            default:
+              currentQuestion.text = `${product} / ${num1} = ?`;
+              currentQuestion.answer = num2;
+          }
         }
 
         function generateQuestion() {
@@ -536,6 +585,19 @@
               break;
             case 7:
               generateQuestion7();
+              break;
+            case 8:
+              generateQuestion8();
+              break;
+            case 9:
+              generateQuestion9();
+              break;
+            case 10:
+              generateQuestion10();
+              break;
+            case 11:
+              generateQuestion11();
+              break;
             default:
               generateQuestion8();
           }
