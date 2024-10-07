@@ -498,9 +498,12 @@
 
         function generateQuestion8() {
           const num1 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          const num2 = Math.floor(Math.sqrt(Math.random()) * 11) + 2;
+          /**
           const num2_max = Math.floor(144 / num1);
           const num2 =
             Math.floor(Math.sqrt(Math.random()) * (num2_max - 1)) + 2;
+          **/
           const product = num1 * num2;
           currentQuestion.text = `${product} / ${num1}`;
           currentQuestion.answer = num2;
