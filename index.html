@@ -262,7 +262,7 @@
         <label for="difficulty" class="label">Difficulty:</label>
         <select id="difficulty" name="difficulty">
           <option value="1">Level 1 (plus and minus, &le;10)</option>
-          <option value="2">Level 2 (plus and minus, &lt;20)</option>
+          <option value="2">Level 2 (plus and minus, &le;20)</option>
           <option value="3">Level 3 (plus and minus, mixed, &lt;40)</option>
           <option value="4">Level 4 (plus and minus, mixed, &lt;100)</option>
           <option value="5">Level 5 (multiple, &le;10)</option>
@@ -270,8 +270,8 @@
           <option value="7">Level 7 (multiple, mixed, &le;12)</option>
           <option value="8">Level 8 (multiple, mixed, &le;20)</option>
           <option value="9" selected>Level 9 (division, &le;12)</option>
-          <option value="10">Level 10, mixed, (division, &le;12)</option>
-          <option value="11">Level 11, mixed, (division, &le;20)</option>
+          <option value="10">Level 10 (division, mixed, &le;12)</option>
+          <option value="11">Level 11 (division, mixed, &le;20)</option>
         </select>
       </div>
       <div class="setting">
@@ -280,7 +280,9 @@
           <option value="10">10 Problems</option>
           <option value="20">20 Problems</option>
           <option value="30">30 Problems</option>
+          <option value="10060">60 Seconds</option>
           <option value="10090" selected>90 Seconds</option>
+          <option value="10120">120 Seconds</option>
         </select>
       </div>
       <div class="setting">
@@ -376,8 +378,8 @@
         }
 
         function generateQuestion2() {
-          const num1 = Math.floor(Math.random() * 15) + 5;
-          const num2 = Math.floor(Math.random() * 15) + 5;
+          const num1 = Math.floor(Math.random() * 16) + 5;
+          const num2 = Math.floor(Math.random() * 16) + 5;
           const sum = num1 + num2;
           if (Math.random() < 0.5) {
             currentQuestion.text = `${num1} + ${num2} = ?`;
@@ -564,42 +566,56 @@
         }
 
         function generateQuestion() {
-          switch (currentLevel) {
-            case 1:
-              generateQuestion1();
+          while (1) {
+            switch (currentLevel) {
+              case 1:
+                generateQuestion1();
+                break;
+              case 2:
+                generateQuestion2();
+                break;
+              case 3:
+                generateQuestion3();
+                break;
+              case 4:
+                generateQuestion4();
+                break;
+              case 5:
+                generateQuestion5();
+                break;
+              case 6:
+                generateQuestion6();
+                break;
+              case 7:
+                generateQuestion7();
+                break;
+              case 8:
+                generateQuestion8();
+                break;
+              case 9:
+                generateQuestion9();
+                break;
+              case 10:
+                generateQuestion10();
+                break;
+              case 11:
+                generateQuestion11();
+                break;
+              default:
+                generateQuestion8();
+            }
+            let n = questions.length;
+            let lastX = Math.min(9, n);
+            let foundRepeat = 0;
+            for (let i = 0; i < lastX; ++i) {
+              if (questions[n - i - 1].text === currentQuestion.text) {
+                foundRepeat = 1;
+                break;
+              }
+            }
+            if (!foundRepeat) {
               break;
-            case 2:
-              generateQuestion2();
-              break;
-            case 3:
-              generateQuestion3();
-              break;
-            case 4:
-              generateQuestion4();
-              break;
-            case 5:
-              generateQuestion5();
-              break;
-            case 6:
-              generateQuestion6();
-              break;
-            case 7:
-              generateQuestion7();
-              break;
-            case 8:
-              generateQuestion8();
-              break;
-            case 9:
-              generateQuestion9();
-              break;
-            case 10:
-              generateQuestion10();
-              break;
-            case 11:
-              generateQuestion11();
-              break;
-            default:
-              generateQuestion8();
+            }
           }
 
           questionElement.textContent = `Q${questionNumber + 1}: ${
