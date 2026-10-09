@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hong Tang — agent infrastructure &amp; distributed systems</title>
+<meta name="description" content="Hong Tang builds infrastructure that makes coding agents dependable for teams. Previously: Alibaba Cloud's Apsara stack, Hadoop at Yahoo, capacity infrastructure at Meta.">
+<style>
+  :root {
+    --bg: #fbfbf9; --ink: #1c1d1f; --muted: #5d636b; --faint: #8a9099;
+    --accent: #1f4e79; --rule: #dde3ea; --card: #ffffff; --tag: #eef3f8;
+    --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    --sans: "Avenir Next", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121417; --ink: #e6e7e9; --muted: #a3a9b1; --faint: #7d848d;
+      --accent: #8fb8e6; --rule: #2a2f36; --card: #181b1f; --tag: #1e2a37; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 18px/1.6 var(--serif); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+  a:hover { border-bottom-color: var(--accent); }
+  main { max-width: 760px; margin: 0 auto; padding: 72px 24px 96px; }
+
+  .hero h1 { font: 600 40px/1.1 var(--sans); letter-spacing: 0.01em; margin: 0 0 14px; }
+  .hero .lead { font-size: 22px; line-height: 1.45; margin: 0 0 14px; }
+  .hero .sub { color: var(--muted); margin: 0 0 20px; }
+  .links { font: 500 15px/1 var(--sans); display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  .links a { border: 0; }
+
+  h2 { font: 600 13px/1 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin: 72px 0 22px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  h3 { font: 600 21px/1.3 var(--sans); margin: 0 0 4px; }
+  p { margin: 0 0 14px; }
+
+  .thesis { font-size: 20px; line-height: 1.5; border-left: 3px solid var(--accent); padding: 2px 0 2px 18px; margin: 0 0 22px; }
+  .bets { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; }
+  .bets li { font-size: 16.5px; line-height: 1.45; }
+  .bets b { font-family: var(--sans); font-weight: 600; display: block; font-size: 15.5px; }
+  @media (max-width: 640px) { .bets { grid-template-columns: 1fr; } }
+
+  .project { margin: 0 0 52px; }
+  .meta { font: 500 13px/1.4 var(--sans); color: var(--faint); letter-spacing: 0.04em; margin: 0 0 12px; }
+  .meta .tag { display: inline-block; background: var(--tag); color: var(--muted); border-radius: 4px; padding: 2px 7px; margin-right: 4px; }
+  .project ul { margin: 0 0 14px; padding-left: 20px; }
+  .project li { margin-bottom: 6px; }
+  figure { margin: 18px 0 8px; }
+  figure img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule);
+    box-shadow: 0 6px 24px rgba(20, 30, 45, 0.08); }
+  figcaption { font: 14px/1.4 var(--sans); color: var(--faint); margin-top: 8px; }
+  .callout { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-size: 16.5px; }
+  .callout b { font-family: var(--sans); font-size: 15px; }
+
+  .timeline { list-style: none; padding: 0; margin: 0; }
+  .timeline li { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .timeline li:first-child { border-top: 0; padding-top: 0; }
+  .when { font: 500 14px/1.6 var(--sans); color: var(--faint); }
+  .timeline .what b { font-family: var(--sans); font-weight: 600; }
+  .timeline .what p { margin: 2px 0 0; color: var(--muted); font-size: 16.5px; }
+  @media (max-width: 640px) { .timeline li { grid-template-columns: 1fr; gap: 2px; } }
+
+  .list { padding-left: 20px; margin: 0; }
+  .list li { margin-bottom: 8px; }
+  footer { margin-top: 72px; font: 14px/1.5 var(--sans); color: var(--faint); }
+</style>
+</head>
+<body>
+<main>
+
+<section class="hero">
+  <h1>Hong Tang</h1>
+  <p class="lead">I build the infrastructure that makes coding agents dependable for teams: skill distribution under a context budget, observability, evals, and durable task state.</p>
+  <p class="sub">Head of Project H, an AI-native engineering group in Alibaba Cloud’s CTO Office. Before agents, two decades of internet-scale distributed systems: founding engineering lead of Alibaba Cloud’s Apsara stack, Hadoop at Yahoo, capacity infrastructure at Meta. Ph.D., Computer Science, UC Santa Barbara.</p>
+  <div class="links">
+    <a href="https://github.com/tanghong123">GitHub</a>
+    <a href="https://www.linkedin.com/in/hongtang/">LinkedIn</a>
+    <a href="mailto:hong.tang@gmail.com">hong.tang@gmail.com</a>
+  </div>
+</section>
+
+<h2>Now: agent infrastructure</h2>
+<p class="thesis">Coding agents raised a team’s production rate by an order of magnitude. Its coordination rate didn’t move.</p>
+<p>Project H is a ten-person group that rebuilds its own engineering workflow around coding agents, then turns what works into tools for other teams. Agents (Claude Code and Codex) write and cross-review the code. People own the design (specs, ADRs, design-doc review) and the gates that decide what ships: tests, invariant checks, and evals. Since spring 2026 I have built full-time this way, directing about 1,400 hours of active agent time by mid-September.</p>
+<ul class="bets">
+  <li><b>Task state is a document, not a memory.</b> Work outlives a session, a context window, and a machine.</li>
+  <li><b>Review moves upstream.</b> Humans read designs and plans, where a change is still cheap. Agents handle the diffs.</li>
+  <li><b>Evaluate the product as shipped.</b> Score the real pipeline, including its prompts, retries and deadlines, not the model in isolation.</li>
+  <li><b>Human attention is the constraint.</b> Agents are rarely the bottleneck; people waiting and reviewing are.</li>
+  <li><b>Stay agent-agnostic.</b> No single agent will win, so shared substrate beats standardized clients.</li>
+</ul>
+
+<h2>Selected work</h2>
+
+<article class="project">
+  <h3>agent-replay &amp; agent-monitor: observability for coding agents</h3>
+  <div class="meta"><span class="tag">Rust</span><span class="tag">Open source</span> sole author · <a href="https://github.com/tanghong123/claude-replay">github.com/tanghong123/claude-replay</a></div>
+  <p>When one person runs many agent sessions, the hard question is which of them is waiting on you right now. agent-monitor answers it from a single page. It reads Claude Code, Codex and Qoder transcripts through one agent-agnostic engine, shows which sessions are blocked on a human, searches across all of them, and lets you reply from a paired phone.</p>
+  <ul>
+    <li>A streaming parser cut peak memory 2.6× on 300 MB transcripts, with byte-identical output. A validated parse cache brings a 400 MB session from about 86 s to 2.7 s on reopen.</li>
+    <li>Observe-only by default: no hooks, bound to loopback. Writing back to a session requires explicit pairing.</li>
+    <li>Ships daily and is used across the team every day.</li>
+  </ul>
+  <figure><img src="assets/agent-monitor.jpg" alt="agent-monitor showing a long Claude Code session with an outline, task and subagent panels, and cross-session search" loading="lazy"><figcaption>A 1,300-turn Claude Code session in agent-monitor, with turn outline, tasks and subagents.</figcaption></figure>
+</article>
+
+<article class="project">
+  <h3>Crux: meeting memory as team context, and the evals behind it</h3>
+  <div class="meta"><span class="tag">Swift</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Postgres</span> sole author</div>
+  <p>Meetings carry most of a team’s decisions, but generic transcription garbles names and jargon, and its summaries are throwaway. Crux began as my on-device macOS app (WhisperKit speech recognition, speaker diarization, a local LLM via Ollama). It grew into a nine-service web system that turns meetings into speaker-attributed, term-corrected transcripts, deduplicated slides and cited summaries, for people and agents alike.</p>
+  <ul>
+    <li>Human corrections are anchored to the audio, not the text, so they survive re-transcription when a better model arrives.</li>
+    <li>Where two speech recognizers disagree, the disagreement becomes a term-correction candidate, and slide text is the strongest evidence.</li>
+  </ul>
+  <div class="callout"><b>Choosing models by measurement.</b> I built an eval harness that runs the product’s own stage code, so scores include prompts, retries and deadlines. Blind judges come from three model families, and any pair of models is compared only by a judge from neither family, which avoids self-preference. Confidence intervals come from bootstrapping within meetings, and a hard spend cap held the full run to about $80 for 1,600 calls. Results:
+    <ul>
+      <li>Two of four stages moved to a cheaper model at parity.</li>
+      <li>Two stayed on Opus where the harness measured regressions.</li>
+      <li>Building it exposed a guard that had been silently discarding 27% of outputs.</li>
+    </ul>
+  </div>
+</article>
+
+<article class="project">
+  <h3>Knack: a package manager for agent skills</h3>
+  <div class="meta"><span class="tag">Rust</span> co-designed with one teammate; I wrote the client</div>
+  <p>Skills (SKILL.md) are becoming the unit of reusable agent know-how, yet teams copy them around by hand with no versioning, no review, and no budget for the context they consume. Knack keeps one git-backed library and installs skills into Claude Code, Codex and Qoder, with edits made inside any agent flowing back to the library.</p>
+  <ul>
+    <li><b>Admission:</b> a conformance gate and a human sign-off before any skill reaches an agent, plus an Ed25519-signed catalog for one-line, company-wide setup.</li>
+    <li><b>Context budget:</b> a capped set of always-loaded skills, with the rest found on demand through offline full-text discovery.</li>
+    <li><b>Reliability:</b> one writer per agent directory, so an agent never sees a half-merged file; an operation journal; invariants checked on every command; about 70 architecture decision records.</li>
+  </ul>
+</article>
+
+<article class="project">
+  <h3>agent-metrics: what coding agents actually do</h3>
+  <div class="meta"><span class="tag">Rust</span><span class="tag">SQLite</span> creator</div>
+  <p>agent-metrics measures active agent time against wall clock, token cost by model, and agent- versus human-authored commits across machines. The team server receives counts only, never prompts or code. Its first surprise was that agents were active only about 8% of open-session time, which is why the group now optimizes for human attention rather than agent throughput.</p>
+</article>
+
+<article class="project">
+  <h3>mdrev and taskq: human-in-the-loop primitives</h3>
+  <div class="meta"><span class="tag">TypeScript</span><span class="tag">Python</span> sole author</div>
+  <p><b>mdrev</b> is code review for prose. An agent rewrites twenty pages, and you read a semantic redline across git revisions instead of the whole document again. Notes are anchored to the quoted text, survive later edits, and are picked up by agents, which fix them and resolve each with a link to the commit.</p>
+  <figure><img src="assets/mdrev.jpg" alt="mdrev showing a rendered Markdown redline with struck and inserted text, a changed YAML value and a changed table cell" loading="lazy"><figcaption>mdrev: a rendered redline across revisions, with anchored review notes in the margin.</figcaption></figure>
+  <p><b>taskq</b> is a durable work queue that every coding agent can share across sessions and machines. It has atomic claims, executable definitions of done (commands that must pass), an audit line in the agent’s transcript for every change, and serverless sharing through git refs.</p>
+  <figure><img src="assets/taskq.jpg" alt="taskq board showing queues for several repositories with blocked, ready, doing and done columns" loading="lazy"><figcaption>The taskq board: every repository’s queue, shared by people and agents.</figcaption></figure>
+</article>
+
+<article class="project">
+  <h3>Also in Project H</h3>
+  <p>As tech lead I also guide a team knowledge base served to agents over MCP (ontology extraction, hybrid vector and graph retrieval), multi-person shared agent sessions, and an agent-maintained task ledger built from meetings. On the side I maintain <a href="https://github.com/tanghong123/rowt">rowt</a>, a Rust split-routing proxy for macOS that a coding agent sets up for you.</p>
+</article>
+
+<h2>Before agents: distributed systems</h2>
+<ul class="timeline">
+  <li><div class="when">2023 – 2026</div><div class="what"><b>Chief Architect, Alibaba Cloud</b><p>Started and architected agentic operations: a federated multi-agent system for anomaly detection, incident diagnosis and recovery recommendation, in production since July 2026. Re-architected Apsara so an isolated region bootstraps with zero external dependencies.</p></div></li>
+  <li><div class="when">2020 – 2023</div><div class="what"><b>Meta, cross-org tech lead for physical resource management</b><p>Capacity accounting and allocation across Meta’s infrastructure, with $1.5B in projected capex savings. Built a measurement framework that found $3B of opportunity in the compute fleet. One of five core tech leads of Infra Cloud.</p></div></li>
+  <li><div class="when">2010 – 2020</div><div class="what"><b>Alibaba Cloud, from founding engineering lead to Chief Architect</b><p>Built the Apsara stack from the ground up: the Pangu distributed file system, the Fuxi scheduler, and coordination, RPC and monitoring. A single cluster reached 5,000 nodes in 2013, and FuxiSort set records in all four 2015 Sort Benchmark categories. Later technical advisor to Alibaba’s Executive Vice Chairman.</p></div></li>
+  <li><div class="when">2008 – 2010</div><div class="what"><b>Yahoo, Hadoop performance</b><p>Built the Hadoop performance engineering team. Wrote <a href="https://issues.apache.org/jira/browse/MAPREDUCE-728">Mumak</a>, a MapReduce scheduler simulator, and <a href="https://issues.apache.org/jira/browse/HADOOP-3315">TFile</a>, the file format HBase’s HFile was derived from.</p></div></li>
+  <li><div class="when">2000 – 2008</div><div class="what"><b>Teoma and Ask.com, search infrastructure</b><p>Founding engineer of the Teoma search engine, then built Ask.com’s offline search infrastructure and core C++ libraries.</p></div></li>
+</ul>
+
+<h2>Writing, talks &amp; papers</h2>
+<ul class="list">
+  <li><i>Fuxi: a fault-tolerant resource management and job scheduling system at internet scale.</i> PVLDB 7(13), 2014. <a href="https://www.vldb.org/pvldb/vol7/p1393-zhang.pdf">PDF</a></li>
+  <li><i>FuxiSort.</i> Sort Benchmark, 2015: records in all four GraySort and MinuteSort categories. <a href="http://sortbenchmark.org/FuxiSort2015.pdf">PDF</a></li>
+  <li>Founders’ Lessons interview, on moving from research to internet services and on building Alibaba Cloud. <a href="https://medium.com/foothill-ventures/founders-lessons-hong-tang-former-chief-architect-of-alibaba-cloud-part-1-9b20c87b2600">Part 1</a> · <a href="https://medium.com/foothill-ventures/founders-lessons-hong-tang-former-chief-architect-of-alibaba-cloud-part-2-8aa78f765a0b">Part 2</a></li>
+</ul>
+
+<footer>Hong Tang · Bay Area, California</footer>
+</main>
+</body>
+</html>
