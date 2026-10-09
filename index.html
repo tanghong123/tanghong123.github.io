@@ -83,7 +83,7 @@
 
 <h2>Now: agent infrastructure</h2>
 <p class="thesis">Coding agents raised a team’s production rate by an order of magnitude. Its coordination rate didn’t move.</p>
-<p>Project H is a ten-person group that rebuilds its own engineering workflow around coding agents, then turns what works into tools for other teams. Agents (Claude Code and Codex) write and cross-review the code. People own the design (specs, ADRs, design-doc review) and the gates that decide what ships: tests, invariant checks, and evals. I have worked hands-on with coding agents since spring 2026 and full-time since June: about 3,200 hours of active agent time since July, measured by my own telemetry.</p>
+<p>Project H is a ten-person group that rebuilds its own engineering workflow around coding agents, then turns what works into tools for other teams. Agents (Claude Code and Codex) write and cross-review the code. People own the design (specs, ADRs, design-doc review) and the gates that decide what ships: tests, invariant checks, and evals. I have worked hands-on with coding agents since spring 2026 and full-time since June: about 3,200 agent-hours since July, summed across parallel sessions and measured by my own telemetry.</p>
 <ul class="bets">
   <li><b>Task state is a document, not a memory.</b> Work outlives a session, a context window, and a machine.</li>
   <li><b>Review moves upstream.</b> Humans read designs and plans, where a change is still cheap. Agents handle the diffs.</li>
@@ -96,7 +96,7 @@
 
 <article class="project">
   <h3>agent-replay &amp; agent-monitor: observability for coding agents</h3>
-  <div class="meta"><span class="tag">Rust</span><span class="tag">Open source</span> sole author · <a href="https://github.com/tanghong123/claude-replay">github.com/tanghong123/claude-replay</a></div>
+  <div class="meta"><span class="tag">Rust</span><span class="tag">Open source</span> primary author · <a href="https://github.com/tanghong123/claude-replay">github.com/tanghong123/claude-replay</a></div>
   <p>When one person runs many agent sessions, the hard question is which of them is waiting on you right now. agent-monitor answers it from a single page. It reads Claude Code, Codex and Qoder transcripts through one agent-agnostic engine, shows which sessions are blocked on a human, searches across all of them, and lets you reply from a paired phone.</p>
   <ul>
     <li>A streaming parser cut peak memory 2.6× on 300 MB transcripts, with byte-identical output. A validated parse cache brings a 400 MB session from about 86 s to 2.7 s on reopen.</li>
@@ -108,7 +108,7 @@
 
 <article class="project">
   <h3>Crux: meeting memory as team context, and the evals behind it</h3>
-  <div class="meta"><span class="tag">Swift</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Postgres</span> sole author</div>
+  <div class="meta"><span class="tag">Swift</span><span class="tag">Python</span><span class="tag">React</span><span class="tag">Postgres</span> primary author</div>
   <p>Meetings carry most of a team’s decisions, but generic transcription garbles names and jargon, and its summaries are throwaway. Crux began as my on-device macOS app (WhisperKit speech recognition, speaker diarization, a local LLM via Ollama). It grew into a nine-service web system that turns meetings into speaker-attributed, term-corrected transcripts, deduplicated slides and cited summaries, for people and agents alike.</p>
   <ul>
     <li>Human corrections are anchored to the audio, not the text, so they survive re-transcription when a better model arrives.</li>
@@ -143,7 +143,7 @@
 
 <article class="project">
   <h3>mdrev and taskq: human-in-the-loop primitives</h3>
-  <div class="meta"><span class="tag">TypeScript</span><span class="tag">Python</span> sole author</div>
+  <div class="meta"><span class="tag">TypeScript</span><span class="tag">Python</span> primary author</div>
   <p><b>mdrev</b> is code review for prose. An agent rewrites twenty pages, and you read a semantic redline across git revisions instead of the whole document again. Notes are anchored to the quoted text, survive later edits, and are picked up by agents, which fix them and resolve each with a link to the commit.</p>
   <figure><img src="assets/mdrev.jpg" alt="mdrev showing a rendered Markdown redline with struck and inserted text, a changed YAML value and a changed table cell" loading="lazy"><figcaption>mdrev: a rendered redline across revisions, with anchored review notes in the margin.</figcaption></figure>
   <p><b>taskq</b> is a durable work queue that every coding agent can share across sessions and machines. It has atomic claims, executable definitions of done (commands that must pass), an audit line in the agent’s transcript for every change, and serverless sharing through git refs.</p>
