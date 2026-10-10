@@ -91,7 +91,7 @@
 
 <h2>Now: agent infrastructure</h2>
 <p class="thesis">Coding agents raised a team’s production rate by an order of magnitude. Its coordination rate didn’t move.</p>
-<p>Project H is a ten-person group that rebuilds its own engineering workflow around coding agents, then turns what works into tools for other teams. Agents (Claude Code and Codex) write and cross-review the code. People own the design (specs, ADRs, design-doc review) and the gates that decide what ships: tests, invariant checks, and evals. I have worked hands-on with coding agents since spring 2026 and full-time since June: about 3,200 agent-hours since July, summed across parallel sessions and measured by my own telemetry.</p>
+<p>Project H is a ten-person group that rebuilds its own engineering workflow around coding agents, then turns what works into tools for other teams. Coding agents write and cross-review the code. People own the design (specs, ADRs, design-doc review) and the gates that decide what ships: tests, invariant checks, and evals. I have worked hands-on with coding agents since spring 2026 and full-time since June: about 3,200 agent-hours since July, summed across parallel sessions and measured by my own telemetry.</p>
 <ul class="bets">
   <li><b>Task state is a document, not a memory.</b> Work outlives a session, a context window, and a machine.</li>
   <li><b>Review moves upstream.</b> Humans read designs and plans, where a change is still cheap. Agents handle the diffs.</li>
@@ -111,7 +111,7 @@
     <li>Observe-only by default: no hooks, bound to loopback. Writing back to a session requires explicit pairing.</li>
     <li>Ships daily and is used across the team every day.</li>
   </ul>
-  <figure><img src="assets/agent-monitor.jpg" alt="agent-monitor showing a long Claude Code session with an outline, task and subagent panels, and cross-session search" loading="lazy"><figcaption>A 1,300-turn Claude Code session in agent-monitor, with turn outline, tasks and subagents.</figcaption></figure>
+  <figure><img src="assets/agent-monitor.jpg" alt="agent-monitor on synthetic demo data: a Claude Code session in the payments project is awaiting a reply, showing the question it asked" loading="lazy"><figcaption>agent-monitor on synthetic demo data: the session marked “Awaiting a reply” shows the question it is waiting on.</figcaption></figure>
 </article>
 
 <article class="project">
@@ -125,7 +125,7 @@
   <div class="callout"><b>Choosing models by measurement.</b> I built an eval harness that runs the product’s own stage code, so scores include prompts, retries and deadlines. Blind judges come from three model families, and any pair of models is compared only by a judge from neither family, which avoids self-preference. Confidence intervals come from bootstrapping within meetings, and a hard spend cap held the full run to about $80 for 1,600 calls. Results:
     <ul>
       <li>Two of four stages moved to a cheaper model at parity.</li>
-      <li>Two stayed on Opus where the harness measured regressions.</li>
+      <li>Two stayed on the stronger frontier model where the harness measured regressions.</li>
       <li>Building it exposed a guard that had been silently discarding 27% of outputs.</li>
     </ul>
   </div>
