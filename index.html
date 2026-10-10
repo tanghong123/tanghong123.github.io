@@ -146,7 +146,7 @@
 <article class="project">
   <h3>agent-metrics: what coding agents actually do</h3>
   <div class="meta"><span class="tag">Rust</span><span class="tag">SQLite</span> creator</div>
-  <p>agent-metrics measures active agent time against wall clock, token cost by model, and agent- versus human-authored commits across machines. The team server receives counts only, never prompts or code. Its first surprise was that agents were active only about 8% of open-session time, which is why the group now optimizes for human attention rather than agent throughput.</p>
+  <p>agent-metrics measures active agent time against wall clock, token cost by model, and agent- versus human-authored commits across machines. The team server receives counts only, never prompts or code. Its first surprise was that agents were active only about 8% of open-session time: session counts and wall clock overstate agent work more than tenfold, so we report active time.</p>
 </article>
 
 <article class="project">
